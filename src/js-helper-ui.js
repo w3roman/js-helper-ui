@@ -72,53 +72,39 @@ jsHelperUi.shortUrl = async (shortenerUrl, urlForShortening) => {
 
 /**
  * @param {Object} options
- * @param {Object} options.from HTMLElement
- * @param {Object} options.to   HTMLElement
+ * @param {HTMLElement} options.from
+ * @param {HTMLElement} options.to
  */
-jsHelperUi.htmlHeadersMap = function (options) {
-
-    // Get
-
-    var headers = [];
-    for (var i = 1; i <= 6; i++) {
-        var headersOnPage = options.from.querySelectorAll('h' + i);
-        for (var j = 0; j < headersOnPage.length; j++) {
-            headers.push(headersOnPage[j]);
+jsHelperUi.htmlHeadersMap = options => {
+    let headers = []
+    // Get headers
+    for (let i = 1; i <= 6; i++) {
+        const headersOnPage = options.from.querySelectorAll('h' + i)
+        for (let j = 0; j < headersOnPage.length; j++) {
+            headers.push(headersOnPage[j])
         }
     }
-
-    // Sort
-
-    var sortedHeaders = {};
-    headers.forEach(function (header) {
+    // Sort headers
+    const sortedHeaders = {}
+    headers.forEach(header =>
         sortedHeaders[
-            Math.round(header.getBoundingClientRect().top + pageYOffset)
-        ] = header;
-    });
-    headers = sortedHeaders;
-
-    // Wrap
-
-    var nav = document.createElement('nav');
-    nav.classList.add('js-helper-html-headers-map');
-
-    // Generate markup
-
-    for (var header in headers) {
-        var item = document.createElement('div');
+            Math.round(header.getBoundingClientRect().top + scrollY)
+        ] = header
+    )
+    headers = sortedHeaders
+    // Create <nav> element and generate markup
+    const nav = document.createElement('nav')
+    nav.classList.add('js-helper-html-headers-map')
+    for (let header in headers) {
+        let item = document.createElement('div')
         item.classList.add(
-            'js-helper-html-headers-map-' +
-                headers[header].tagName.toLowerCase()
-        );
-        item.textContent = headers[header].textContent;
-        nav.appendChild(item);
+            'js-helper-html-headers-map-' + headers[header].tagName.toLowerCase()
+        )
+        item.textContent = headers[header].textContent
+        nav.appendChild(item)
     }
-
-    // Add to
-
-    options.to.appendChild(nav);
-
-};
+    options.to.appendChild(nav)
+}
 
 /**
  * @param {String} [textContent=</>]

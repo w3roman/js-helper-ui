@@ -31,3 +31,21 @@
 <button onclick="jsHelperUi.shortUrl('v.gd', 'https://grinvik.com').then(shortLink => alert(shortLink))">
   jsHelperUi.shortUrl('v.gd', 'https://grinvik.com').then(shortLink => alert(shortLink))
 </button>
+
+<div id="js-helper-html-headers-map-box">
+  <h1>jsHelperUi.htmlHeadersMap</h1>
+  <h2>Header 2</h2>
+  <h3>Header 3</h3>
+  <h4>Header 4</h4>
+  <h5>Header 5</h5>
+  <h6>Header 6</h6>
+</div>
+<div id="js-helper-html-headers-map-result"></div>
+<script>
+  window.addEventListener('DOMContentLoaded', _ => {
+    jsHelperUi.htmlHeadersMap({
+      from: document.getElementById('js-helper-html-headers-map-box'),
+      to: document.getElementById('js-helper-html-headers-map-result')
+    })
+  })
+</script>
