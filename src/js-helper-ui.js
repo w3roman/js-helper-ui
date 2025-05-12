@@ -2,92 +2,73 @@
 const jsHelperUi = {}
 
 /**
- * Only works if the user takes an action.
+ * Programmatic operation requires prior user interaction (e.g. any page click)
  * @param {String} text
+ * @see https://stackoverflow.com/a/71876238/4223982
  */
-jsHelperUi.copyTextToClipboard = text => {
-    const textarea = document.createElement('textarea')
-    textarea.style.opacity = 0 // When using `display: none` the `copy` does not work
-    textarea.value = text
-    document.body.appendChild(textarea)
-    textarea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textarea)
+jsHelperUi.copyTextToClipboard = async text => {
+    try {
+        if (window.isSecureContext && navigator.clipboard) {
+            await navigator.clipboard.writeText(text)
+        } else {
+            const textarea = document.createElement('textarea')
+            textarea.style.opacity = '0' // When using `display: none` the `copy` does not work
+            textarea.value = text
+            document.body.appendChild(textarea)
+            textarea.select()
+            document.execCommand('copy')
+            document.body.removeChild(textarea)
+        }
+    } catch (e) {
+        console.log(e)
+    }
 }
 
+jsHelperUi._contextMenuListener = mouseEvent => mouseEvent.preventDefault()
+
+jsHelperUi.disableContextMenu = _ => window.addEventListener('contextmenu', jsHelperUi._contextMenuListener)
+jsHelperUi.enableContextMenu = _ => window.removeEventListener('contextmenu', jsHelperUi._contextMenuListener)
+
 /**
- * Disables code review.
- * Tested in: Google Chrome.
+ * Tested in Google Chrome
+ * @see https://toptal.com/developers/keycode
  */
-jsHelperUi.disableCodeReview = function () {
+jsHelperUi._defaultShortcutsOfCodeReview = keyboardEvent =>
+    (
+        keyboardEvent.code === 'F12'
+        ||
+        (keyboardEvent.ctrlKey && keyboardEvent.code === 'KeyU')
+        ||
+        (
+            keyboardEvent.ctrlKey && keyboardEvent.shiftKey
+            && ['KeyI', 'KeyJ'].includes(keyboardEvent.code)
+        )
+    )
+    && keyboardEvent.preventDefault()
 
-    // Disabling the context menu
+jsHelperUi.disableDefaultShortcutsOfCodeReview = _ =>
+    window.addEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
+jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
+    window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
 
-    window.addEventListener('contextmenu', function(mouseEvent) {
-        mouseEvent.preventDefault();
-    });
-
-    // Disabling the Dev Tools
-
-    window.addEventListener('keydown', function(keyboardEvent) {
-        if (
-            // 85 - U (Ctrl + U)
-            (keyboardEvent.ctrlKey && keyboardEvent.keyCode === 85) ||
-            (
-                keyboardEvent.ctrlKey &&
-                keyboardEvent.shiftKey &&
-                // 73 - I (Ctrl + Shift + I), 74 - J (Ctrl + Shift + J)
-                [73, 74].indexOf(keyboardEvent.keyCode) !== -1
-            ) ||
-            // 123 - F12
-            keyboardEvent.keyCode === 123
-        ) {
-            keyboardEvent.preventDefault();
+jsHelperUi.shortUrl = async (shortenerUrl, urlForShortening) => {
+    const shorteners = {
+        'clck.ru': 'https://clck.ru/--?url=',
+        'is.gd': 'https://corsproxy.io/?url=' + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
+        'v.gd': 'https://corsproxy.io/?url=' + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
+    }
+    if (shorteners[shortenerUrl]) {
+        shortenerUrl = shorteners[shortenerUrl]
+    }
+    try {
+        const response = await fetch(shortenerUrl + encodeURIComponent(urlForShortening))
+        if (response.ok) {
+            return await response.text()
         }
-    });
-
-};
-
-/**
- * Google URL Shortener
- * @param {Object}   options
- * @param {String}   options.apiKey
- * @param {String}   options.longUrl
- * @param {Function} options.onError function (xhr) {}
- * @param {Function} options.onLoad  function (xhr) {}
- * @see https://goo.gl
- * @see https://developers.google.com/url-shortener
- */
-jsHelperUi.googleUrlShortener = function (options) {
-    if (!options.apiKey) {
-        console.error('Google URL Shortener: You must specify API key');
-        return;
+    } catch (e) {
+        console.log(e)
     }
-    if (!options.longUrl) {
-        console.error('Google URL Shortener: You must specify URL');
-        return;
-    }
-    if (!options.onLoad) {
-        console.error('Google URL Shortener: You must specify "onLoad" callback');
-        return;
-    }
-    if (!options.onError) {
-        console.error('Google URL Shortener: You must specify "onError" callback');
-        return;
-    }
-    var xhr = new XMLHttpRequest();
-    xhr.open(
-        'post',
-        'https://www.googleapis.com/urlshortener/v1/url?key=' + options.apiKey
-    );
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.addEventListener(
-        'load',
-        options.onLoad.bind(null, xhr)
-    );
-    xhr.addEventListener('error', options.onError.bind(null, xhr));
-    xhr.send(JSON.stringify({'longUrl': options.longUrl}));
-};
+}
 
 /**
  * @param {Object} options

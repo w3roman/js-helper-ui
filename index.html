@@ -1,7 +1,33 @@
+<!DOCTYPE html>
+
 <script type="module">
   import jsHelperUi from './src/js-helper-ui'
-
-  jsHelperUi.copyTextToClipboard('asd')
+  window.jsHelperUi = jsHelperUi
 </script>
 
 <h1>jsHelperUi</h1>
+
+<button onclick="jsHelperUi.copyTextToClipboard('Hello, World!')">copyTextToClipboard('Hello, World!')</button>
+<br>
+<br>
+<button onclick="jsHelperUi.disableContextMenu()">disableContextMenu()</button>
+<button onclick="jsHelperUi.enableContextMenu()">enableContextMenu()</button>
+<br>
+<br>
+<button onclick="jsHelperUi.disableDefaultShortcutsOfCodeReview()">disableDefaultShortcutsOfCodeReview()</button>
+<button onclick="jsHelperUi.enableDefaultShortcutsOfCodeReview()">enableDefaultShortcutsOfCodeReview()</button>
+<br>
+<br>
+<button onclick="jsHelperUi.shortUrl('clck.ru', 'https://grinvik.com').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('clck.ru', 'https://grinvik.com').then(shortLink => alert(shortLink))
+</button>
+<br>
+<br>
+<button onclick="jsHelperUi.shortUrl('is.gd', 'https://grinvik.com').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('is.gd', 'https://grinvik.com').then(shortLink => alert(shortLink))
+</button>
+<br>
+<br>
+<button onclick="jsHelperUi.shortUrl('v.gd', 'https://grinvik.com').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('v.gd', 'https://grinvik.com').then(shortLink => alert(shortLink))
+</button>
