@@ -1,7 +1,5 @@
 # js-helper-ui
 
-Some set of methods ...
-
 - `jsHelper.addScriptsToThePage(params)`
 - `jsHelper.copyTextToClipboard(text)`
 - `jsHelper.disableCodeReview()`

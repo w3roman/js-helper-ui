@@ -1,38 +1,25 @@
 
-var jsHelper = {};
-
-/**
- * @param {Object} params
- * @param {Array}  params.links
- */
-jsHelper.addScriptsToThePage = function (params) {
-    for (var i = 0; i < params.links.length; i++) {
-        var script = document.createElement('script');
-        script.src = params.links[i];
-        script.async = false; // For the order of addition
-        document.body.appendChild(script);
-    }
-};
+const jsHelperUi = {}
 
 /**
  * Only works if the user takes an action.
  * @param {String} text
- * @see https://stackoverflow.com/a/30810322/4223982
  */
-jsHelper.copyTextToClipboard = function (text) {
-    var input = document.createElement('input');
-    input.value = text;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand('copy');
-    document.body.removeChild(input);
-};
+jsHelperUi.copyTextToClipboard = text => {
+    const textarea = document.createElement('textarea')
+    textarea.style.opacity = 0 // When using `display: none` the `copy` does not work
+    textarea.value = text
+    document.body.appendChild(textarea)
+    textarea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textarea)
+}
 
 /**
  * Disables code review.
  * Tested in: Google Chrome.
  */
-jsHelper.disableCodeReview = function () {
+jsHelperUi.disableCodeReview = function () {
 
     // Disabling the context menu
 
@@ -71,7 +58,7 @@ jsHelper.disableCodeReview = function () {
  * @see https://goo.gl
  * @see https://developers.google.com/url-shortener
  */
-jsHelper.googleUrlShortener = function (options) {
+jsHelperUi.googleUrlShortener = function (options) {
     if (!options.apiKey) {
         console.error('Google URL Shortener: You must specify API key');
         return;
@@ -107,7 +94,7 @@ jsHelper.googleUrlShortener = function (options) {
  * @param {Object} options.from HTMLElement
  * @param {Object} options.to   HTMLElement
  */
-jsHelper.htmlHeadersMap = function (options) {
+jsHelperUi.htmlHeadersMap = function (options) {
 
     // Get
 
@@ -155,7 +142,7 @@ jsHelper.htmlHeadersMap = function (options) {
 /**
  * @param {String} [textContent=</>]
  */
-jsHelper.iLoveValidator = function (textContent) {
+jsHelperUi.iLoveValidator = function (textContent) {
     var link = document.createElement('a');
     link.textContent = textContent || '</>';
     link.target = '_blank';
@@ -179,7 +166,7 @@ jsHelper.iLoveValidator = function (textContent) {
  * @param {Function} [options.callback=null]
  * @param {Boolean}  [options.removeEventListenerAfterFirstExecution=false]
  */
-jsHelper.onKeyCodeSequence = function (options) {
+jsHelperUi.onKeyCodeSequence = function (options) {
 
     options = options || {};
     options.keyCodeSequence = options.keyCodeSequence || null;
@@ -211,3 +198,5 @@ jsHelper.onKeyCodeSequence = function (options) {
     }
 
 };
+
+export default jsHelperUi
