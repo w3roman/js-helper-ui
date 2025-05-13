@@ -14,12 +14,14 @@ npm i @w3lifer/js-helper-ui
 
 ### Methods
 
-- `jsHelperUi.copyTextToClipboard(text)`
-- `jsHelperUi.disableContextMenu()`
-- `jsHelperUi.enableContextMenu()`
-- `jsHelperUi.disableDefaultShortcutsOfCodeReview()`
-- `jsHelperUi.enableDefaultShortcutsOfCodeReview()`
-- `jsHelperUi.htmlHeadersMap(options)`
-- `jsHelperUi.iLoveValidator(textContent = '</>')`
-- `jsHelperUi.onKeyCodeSequence(keyCodeSequence, callback, once = false)`
-- `jsHelperUi.shortUrl(urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false)`
+``` js
+jsHelperUi.copyTextToClipboard(text)
+jsHelperUi.disableContextMenu()
+jsHelperUi.enableContextMenu()
+jsHelperUi.disableDefaultShortcutsOfCodeReview()
+jsHelperUi.enableDefaultShortcutsOfCodeReview()
+jsHelperUi.htmlHeadersMap(options)
+jsHelperUi.iLoveValidator(textContent = '</>')
+jsHelperUi.onKeyCodeSequence(keyCodeSequence, callback, once = false)
+jsHelperUi.shortUrl(urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false)
+```
