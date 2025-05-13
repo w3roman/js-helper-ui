@@ -36,6 +36,24 @@
 <button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'v.gd').then(shortLink => alert(shortLink))">
   jsHelperUi.shortUrl('https://grinvik.com', 'v.gd').then(shortLink => alert(shortLink))
 </button>
+<br>
+<br>
+<button onclick="
+  delete jsHelperUi.const.shorteners['v.gd']
+  &&
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=').then(shortLink => alert(shortLink))
+">
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=').then(shortLink => alert(shortLink))
+</button>
+<br>
+<br>
+<button onclick="
+  delete jsHelperUi.const.shorteners['v.gd']
+  &&
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
+">
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
+</button>
 
 <div id="js-helper-html-headers-map-box">
   <h1>jsHelperUi.htmlHeadersMap</h1>

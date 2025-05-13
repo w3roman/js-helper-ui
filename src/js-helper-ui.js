@@ -1,5 +1,7 @@
 
-const jsHelperUi = {}
+const jsHelperUi = {
+    const: {},
+}
 
 /**
  * Programmatic operation requires prior user interaction (e.g. any page click)
@@ -51,6 +53,12 @@ jsHelperUi.disableDefaultShortcutsOfCodeReview = _ =>
 jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
     window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
 
+jsHelperUi.const.corsProxyUrl = 'https://corsproxy.io/?url='
+jsHelperUi.const.shorteners = {
+    'clck.ru': 'https://clck.ru/--?url=',
+    'is.gd': jsHelperUi.const.corsProxyUrl + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
+    'v.gd': jsHelperUi.const.corsProxyUrl + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
+}
 /**
  * Shortens URLs using preset or custom services.
  * When a custom service is specified:
@@ -63,19 +71,15 @@ jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
  * @param {Boolean} corsProxy Default `false`
  * @returns {Promise<string>}
  */
-jsHelperUi.shortUrl = async (urlForShortening, shortenerUrl, corsProxy = false) => {
-    const corsProxyUrl = 'https://corsproxy.io/?url='
-    const shorteners = {
-        'clck.ru': 'https://clck.ru/--?url=',
-        'is.gd': corsProxyUrl + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
-        'v.gd': corsProxyUrl + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
-    }
-    if (!shortenerUrl) {
-        shortenerUrl = shorteners['clck.ru']
-    } else if (shorteners[shortenerUrl]) {
-        shortenerUrl = shorteners[shortenerUrl]
+jsHelperUi.shortUrl = async (
+    urlForShortening,
+    shortenerUrl = jsHelperUi.const.shorteners['clck.ru'],
+    corsProxy = false
+) => {
+    if (jsHelperUi.const.shorteners[shortenerUrl]) {
+        shortenerUrl = jsHelperUi.const.shorteners[shortenerUrl]
     } else if (corsProxy) {
-        shortenerUrl = 'https://corsproxy.io/?url=' + encodeURIComponent(shortenerUrl)
+        shortenerUrl = jsHelperUi.const.corsProxyUrl + encodeURIComponent(shortenerUrl)
     }
     try {
         const response = await fetch(shortenerUrl + encodeURIComponent(urlForShortening))
