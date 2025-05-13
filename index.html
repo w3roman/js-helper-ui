@@ -64,6 +64,7 @@
   <h6>Header 6</h6>
 </div>
 <div id="js-helper-html-headers-map-result"></div>
+<br>
 <script>
   window.addEventListener('DOMContentLoaded', _ => {
     jsHelperUi.htmlHeadersMap({
@@ -71,5 +72,7 @@
       to: document.getElementById('js-helper-html-headers-map-result')
     })
     jsHelperUi.iLoveValidator()
+    jsHelperUi.onKeyCodeSequence('KeyH,KeyE,KeyL,KeyL,KeyO', alert.bind(null, 'hello'))
+    jsHelperUi.onKeyCodeSequence('KeyO,KeyK', alert.bind(null, 'ok'), true)
   })
 </script>

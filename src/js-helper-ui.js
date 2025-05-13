@@ -142,10 +142,11 @@ jsHelperUi.iLoveValidator = (textContent = '</>') => {
 }
 
 /**
- * Executes callback on the passed key code sequence.
- * @param {String} keyCodeSequence Example: KeyO,KeyK (ok). Delimiter: `,` (without spaces).
- * @param {Function} callback Function to execute when a key code sequence risen
- * @param {Boolean} once=false Remove the execution of the callback after first execution
+ * Executes a `callback` for the given key code sequence
+ * @param {String} keyCodeSequence Example: `KeyO,KeyK` (ok). Delimiter: `,` (without spaces).
+ * @param {Function} callback The function that is executed when a key code sequence occurs
+ * @param {Boolean} once=false Disable `callback` execution after first call
+ * @see https://toptal.com/developers/keycode
  */
 jsHelperUi.onKeyCodeSequence = (keyCodeSequence, callback, once = false) => {
     keyCodeSequence = keyCodeSequence.replace(/ /g, '')
