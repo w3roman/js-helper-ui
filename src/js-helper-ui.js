@@ -67,8 +67,8 @@ jsHelperUi.const.shorteners = {
  * - The service must return the shortened URL as plain text
  * - CORS bypass can be enabled if needed
  * @param {String} urlForShortening
- * @param {String} shortenerUrl Available services: `clck.ru` (default), `is.gd`, `v.gd`
- * @param {Boolean} corsProxy Default `false`
+ * @param {String} shortenerUrl=clck.ru Available services: `clck.ru`, `is.gd`, `v.gd`
+ * @param {Boolean} corsProxy=false Enable CORS proxy
  * @returns {Promise<string>}
  */
 jsHelperUi.shortUrl = async (
