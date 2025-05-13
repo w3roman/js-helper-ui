@@ -143,45 +143,33 @@ jsHelperUi.iLoveValidator = (textContent = '</>') => {
 
 /**
  * Executes callback on the passed key code sequence.
- * @param {Object}   options
- * @param {String}   [options.keyCodeSequence=null] - Key code sequence.
- *                                                    For example: 79,75 (ok).
- *                                                    Delimiter: ","
- *                                                    (without space).
- * @param {Function} [options.callback=null]
- * @param {Boolean}  [options.removeEventListenerAfterFirstExecution=false]
+ * @param {String} keyCodeSequence Example: KeyO,KeyK (ok). Delimiter: `,` (without spaces).
+ * @param {Function} callback Function to execute when a key code sequence risen
+ * @param {Boolean} once=false Remove the execution of the callback after first execution
  */
-jsHelperUi.onKeyCodeSequence = function (options) {
-
-    options = options || {};
-    options.keyCodeSequence = options.keyCodeSequence || null;
-    options.callback = options.callback || null;
-    options.removeEventListenerAfterFirstExecution =
-        options.removeEventListenerAfterFirstExecution || false;
-
-    if (!options.keyCodeSequence || !options.callback) {
-        return;
-    }
-
-    var inputKeySequence = [];
-    window.addEventListener('keyup', doSomething);
-    function doSomething(keyboardEvent) {
-        if (keyboardEvent.keyCode === 27) { // Esc
-            inputKeySequence = [];
-        } else if (keyboardEvent.keyCode === 8) { // Backspace
-            inputKeySequence.pop();
+jsHelperUi.onKeyCodeSequence = (keyCodeSequence, callback, once = false) => {
+    keyCodeSequence = keyCodeSequence.replace(/ /g, '')
+    let inputKeySequence = []
+    /**
+     * @param {KeyboardEvent} keyboardEvent
+     */
+    function listener(keyboardEvent) {
+        if (keyboardEvent.code === 'Escape') {
+            inputKeySequence = []
+        } else if (keyboardEvent.code === 'Backspace') {
+            inputKeySequence.pop()
         } else {
-            inputKeySequence.push(keyboardEvent.keyCode);
-            if (inputKeySequence.toString() === options.keyCodeSequence) {
-                if (options.removeEventListenerAfterFirstExecution) {
-                    window.removeEventListener('keyup', doSomething);
+            inputKeySequence.push(keyboardEvent.code)
+            if (inputKeySequence.toString() === keyCodeSequence) {
+                if (once) {
+                    window.removeEventListener('keyup', listener)
                 }
-                inputKeySequence = [];
-                options.callback();
+                inputKeySequence = []
+                callback()
             }
         }
     }
-
-};
+    window.addEventListener('keyup', listener)
+}
 
 export default jsHelperUi
