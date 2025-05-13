@@ -128,21 +128,18 @@ jsHelperUi.htmlHeadersMap = options => {
 }
 
 /**
- * @param {String} [textContent=</>]
+ * Displays a link to the W3C Markup Validator service
+ * @param {String} textContent=&lt;/&gt; Link text
  */
-jsHelperUi.iLoveValidator = function (textContent) {
-    var link = document.createElement('a');
-    link.textContent = textContent || '</>';
-    link.target = '_blank';
-    link.setAttribute('id', 'js-helper-i-love-validator');
-    link.addEventListener('click', function () {
-        this.href =
-            'https://validator.w3.org/nu/' +
-                '?showimagereport&showoutline&showsource&doc=' +
-                    location.href.split('#')[0];
-    });
-    document.body.appendChild(link);
-};
+jsHelperUi.iLoveValidator = (textContent = '</>') => {
+    const link = document.createElement('a')
+    link.href = 'https://validator.w3.org/nu/?showimagereport&showoutline&showsource&doc='
+    link.textContent = textContent
+    link.target = '_blank'
+    link.setAttribute('id', 'js-helper-i-love-validator')
+    link.addEventListener('click', _ => link.href += location.href.split('#')[0])
+    document.body.appendChild(link)
+}
 
 /**
  * Executes callback on the passed key code sequence.
