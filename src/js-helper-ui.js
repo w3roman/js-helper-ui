@@ -71,11 +71,7 @@ jsHelperUi.const.shorteners = {
  * @param {Boolean} corsProxy=false Enable CORS proxy
  * @returns {Promise<string>}
  */
-jsHelperUi.shortUrl = async (
-    urlForShortening,
-    shortenerUrl = jsHelperUi.const.shorteners['clck.ru'],
-    corsProxy = false
-) => {
+jsHelperUi.shortUrl = async (urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false) => {
     if (jsHelperUi.const.shorteners[shortenerUrl]) {
         shortenerUrl = jsHelperUi.const.shorteners[shortenerUrl]
     } else if (corsProxy) {
