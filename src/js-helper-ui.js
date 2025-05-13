@@ -51,14 +51,31 @@ jsHelperUi.disableDefaultShortcutsOfCodeReview = _ =>
 jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
     window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
 
-jsHelperUi.shortUrl = async (shortenerUrl, urlForShortening) => {
+/**
+ * Shortens URLs using preset or custom services.
+ * When a custom service is specified:
+ * - The target URL will be appended to it
+ * - A GET request will be sent
+ * - The service must return the shortened URL as plain text
+ * - CORS bypass can be enabled if needed
+ * @param {String} urlForShortening
+ * @param {String} shortenerUrl Available services: `clck.ru` (default), `is.gd`, `v.gd`
+ * @param {Boolean} corsProxy Default `false`
+ * @returns {Promise<string>}
+ */
+jsHelperUi.shortUrl = async (urlForShortening, shortenerUrl, corsProxy = false) => {
+    const corsProxyUrl = 'https://corsproxy.io/?url='
     const shorteners = {
         'clck.ru': 'https://clck.ru/--?url=',
-        'is.gd': 'https://corsproxy.io/?url=' + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
-        'v.gd': 'https://corsproxy.io/?url=' + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
+        'is.gd': corsProxyUrl + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
+        'v.gd': corsProxyUrl + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
     }
-    if (shorteners[shortenerUrl]) {
+    if (!shortenerUrl) {
+        shortenerUrl = shorteners['clck.ru']
+    } else if (shorteners[shortenerUrl]) {
         shortenerUrl = shorteners[shortenerUrl]
+    } else if (corsProxy) {
+        shortenerUrl = 'https://corsproxy.io/?url=' + encodeURIComponent(shortenerUrl)
     }
     try {
         const response = await fetch(shortenerUrl + encodeURIComponent(urlForShortening))
