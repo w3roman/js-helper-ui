@@ -32,7 +32,7 @@ jsHelperUi.disableContextMenu = _ => window.addEventListener('contextmenu', jsHe
 jsHelperUi.enableContextMenu = _ => window.removeEventListener('contextmenu', jsHelperUi._contextMenuListener)
 
 /**
- * Tested in Google Chrome
+ * Tested only in Google Chrome
  * @see https://toptal.com/developers/keycode
  */
 jsHelperUi._defaultShortcutsOfCodeReview = keyboardEvent =>
