@@ -26,11 +26,14 @@ jsHelperUi.copyTextToClipboard = async text => {
     }
 }
 
-jsHelperUi._contextMenuListener = mouseEvent => mouseEvent.preventDefault()
-
 jsHelperUi.disableContextMenu = _ => window.addEventListener('contextmenu', jsHelperUi._contextMenuListener)
 jsHelperUi.enableContextMenu = _ => window.removeEventListener('contextmenu', jsHelperUi._contextMenuListener)
+jsHelperUi._contextMenuListener = mouseEvent => mouseEvent.preventDefault()
 
+jsHelperUi.disableDefaultShortcutsOfCodeReview = _ =>
+    window.addEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
+jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
+    window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
 /**
  * Tested only in Google Chrome
  * @see https://toptal.com/developers/keycode
@@ -47,45 +50,6 @@ jsHelperUi._defaultShortcutsOfCodeReview = keyboardEvent =>
         )
     )
     && keyboardEvent.preventDefault()
-
-jsHelperUi.disableDefaultShortcutsOfCodeReview = _ =>
-    window.addEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
-jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
-    window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
-
-jsHelperUi.const.corsProxyUrl = 'https://corsproxy.io/?url='
-jsHelperUi.const.shorteners = {
-    'clck.ru': 'https://clck.ru/--?url=',
-    'is.gd': jsHelperUi.const.corsProxyUrl + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
-    'v.gd': jsHelperUi.const.corsProxyUrl + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
-}
-/**
- * Shortens URLs using preset or custom services.
- * When a custom service is specified:
- * - The target URL will be appended to it
- * - A GET request will be sent
- * - The service must return the shortened URL as plain text
- * - CORS bypass can be enabled if needed
- * @param {String} urlForShortening
- * @param {String} shortenerUrl=clck.ru Available services: `clck.ru`, `is.gd`, `v.gd`
- * @param {Boolean} corsProxy=false Enable CORS proxy
- * @returns {Promise<string>}
- */
-jsHelperUi.shortUrl = async (urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false) => {
-    if (jsHelperUi.const.shorteners[shortenerUrl]) {
-        shortenerUrl = jsHelperUi.const.shorteners[shortenerUrl]
-    } else if (corsProxy) {
-        shortenerUrl = jsHelperUi.const.corsProxyUrl + encodeURIComponent(shortenerUrl)
-    }
-    try {
-        const response = await fetch(shortenerUrl + encodeURIComponent(urlForShortening))
-        if (response.ok) {
-            return await response.text()
-        }
-    } catch (e) {
-        console.log(e)
-    }
-}
 
 /**
  * @param {Object} options
@@ -106,7 +70,7 @@ jsHelperUi.htmlHeadersMap = options => {
     headers.forEach(header =>
         sortedHeaders[
             Math.round(header.getBoundingClientRect().top + scrollY)
-        ] = header
+            ] = header
     )
     headers = sortedHeaders
     // Create <nav> element and generate markup
@@ -167,6 +131,40 @@ jsHelperUi.onKeyCodeSequence = (keyCodeSequence, callback, once = false) => {
         }
     }
     window.addEventListener('keyup', listener)
+}
+
+jsHelperUi.const.corsProxyUrl = 'https://corsproxy.io/?url='
+jsHelperUi.const.shorteners = {
+    'clck.ru': 'https://clck.ru/--?url=',
+    'is.gd': jsHelperUi.const.corsProxyUrl + encodeURIComponent('https://is.gd/create.php?format=simple&url='),
+    'v.gd': jsHelperUi.const.corsProxyUrl + encodeURIComponent('https://v.gd/create.php?format=simple&url='),
+}
+/**
+ * Shortens URLs using preset or custom services.
+ * When a custom service is specified:
+ * - The target URL will be appended to it
+ * - A GET request will be sent
+ * - The service must return the shortened URL as plain text
+ * - CORS bypass can be enabled if needed
+ * @param {String} urlForShortening
+ * @param {String} shortenerUrl=clck.ru Available services: `clck.ru`, `is.gd`, `v.gd`
+ * @param {Boolean} corsProxy=false Enable CORS proxy
+ * @returns {Promise<string>}
+ */
+jsHelperUi.shortUrl = async (urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false) => {
+    if (jsHelperUi.const.shorteners[shortenerUrl]) {
+        shortenerUrl = jsHelperUi.const.shorteners[shortenerUrl]
+    } else if (corsProxy) {
+        shortenerUrl = jsHelperUi.const.corsProxyUrl + encodeURIComponent(shortenerUrl)
+    }
+    try {
+        const response = await fetch(shortenerUrl + encodeURIComponent(urlForShortening))
+        if (response.ok) {
+            return await response.text()
+        }
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export default jsHelperUi

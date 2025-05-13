@@ -1,13 +1,25 @@
 # js-helper-ui
 
-- `jsHelper.addScriptsToThePage(params)`
-- `jsHelper.copyTextToClipboard(text)`
-- `jsHelper.disableCodeReview()`
-- `jsHelper.googleUrlShortener(options)`
-- `jsHelper.htmlHeadersMap(options)`
-- `jsHelper.iLoveValidator(textContent)`
-- `jsHelper.onKeyCodeSequence(options)`
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Methods](#methods)
 
----
+## Installation
 
-- PHP `isset()` equivalent: https://stackoverflow.com/a/2281671/4223982
+``` sh
+npm i @w3lifer/js-helper-ui
+```
+
+## Usage
+
+### Methods
+
+- `jsHelperUi.copyTextToClipboard(text)`
+- `jsHelperUi.disableContextMenu()`
+- `jsHelperUi.enableContextMenu()`
+- `jsHelperUi.disableDefaultShortcutsOfCodeReview()`
+- `jsHelperUi.enableDefaultShortcutsOfCodeReview()`
+- `jsHelperUi.htmlHeadersMap(options)`
+- `jsHelperUi.iLoveValidator(textContent = '</>')`
+- `jsHelperUi.onKeyCodeSequence(keyCodeSequence, callback, once = false)`
+- `jsHelperUi.shortUrl(urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false)`
