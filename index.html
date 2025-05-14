@@ -6,17 +6,18 @@
 </script>
 
 <h1>jsHelperUi</h1>
+<hr><br>
 
 <button onclick="jsHelperUi.copyTextToClipboard('Hello, World!')">copyTextToClipboard('Hello, World!')</button>
-<br><br>
+<br><br><hr><br>
 
 <button onclick="jsHelperUi.disableContextMenu()">disableContextMenu()</button>
 <button onclick="jsHelperUi.enableContextMenu()">enableContextMenu()</button>
-<br><br>
+<br><br><hr><br>
 
 <button onclick="jsHelperUi.disableDefaultShortcutsOfCodeReview()">disableDefaultShortcutsOfCodeReview()</button>
 <button onclick="jsHelperUi.enableDefaultShortcutsOfCodeReview()">enableDefaultShortcutsOfCodeReview()</button>
-<br><br>
+<br><br><hr><br>
 
 <button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'])">
   jsHelperUi.downloadDataAsFile(['Foo', 'Bar'])
@@ -29,6 +30,7 @@
 <button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.html', 'text/html')">
   jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.html', 'text/html')
 </button>
+<br><br><hr>
 
 <div id="js-helper-html-headers-map-box">
   <h1>jsHelperUi.htmlHeadersMap</h1>
@@ -39,7 +41,42 @@
   <h6>Header 6</h6>
 </div>
 <div id="js-helper-html-headers-map-result"></div>
+<br><hr><br>
+
+<button onclick="jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))
+</button>
+<br><br><br>
+
+<button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'clck.ru').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('https://grinvik.com', 'clck.ru').then(shortLink => alert(shortLink))
+</button>
 <br><br>
+<button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'is.gd').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('https://grinvik.com', 'is.gd').then(shortLink => alert(shortLink))
+</button>
+<br><br>
+<button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'v.gd').then(shortLink => alert(shortLink))">
+  jsHelperUi.shortUrl('https://grinvik.com', 'v.gd').then(shortLink => alert(shortLink))
+</button>
+<br><br><br>
+
+<button onclick="
+  delete jsHelperUi.const.shorteners['v.gd']
+  &&
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=').then(shortLink => alert(shortLink))
+">
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=').then(shortLink => alert(shortLink))
+</button>
+<br><br>
+<button onclick="
+  delete jsHelperUi.const.shorteners['v.gd']
+  &&
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
+">
+  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
+</button>
+<br><br><hr>
 
 <script>
   window.addEventListener('DOMContentLoaded', _ => {
@@ -52,41 +89,3 @@
     jsHelperUi.onKeyCodeSequence('KeyO,KeyK', alert.bind(null, 'ok'), true)
   })
 </script>
-
-<button onclick="jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))">
-  jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))
-</button>
-<br>
-<br>
-<button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'clck.ru').then(shortLink => alert(shortLink))">
-  jsHelperUi.shortUrl('https://grinvik.com', 'clck.ru').then(shortLink => alert(shortLink))
-</button>
-<br>
-<br>
-<button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'is.gd').then(shortLink => alert(shortLink))">
-  jsHelperUi.shortUrl('https://grinvik.com', 'is.gd').then(shortLink => alert(shortLink))
-</button>
-<br>
-<br>
-<button onclick="jsHelperUi.shortUrl('https://grinvik.com', 'v.gd').then(shortLink => alert(shortLink))">
-  jsHelperUi.shortUrl('https://grinvik.com', 'v.gd').then(shortLink => alert(shortLink))
-</button>
-<br>
-<br>
-<button onclick="
-  delete jsHelperUi.const.shorteners['v.gd']
-  &&
-  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=').then(shortLink => alert(shortLink))
-">
-  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=').then(shortLink => alert(shortLink))
-</button>
-<br>
-<br>
-<button onclick="
-  delete jsHelperUi.const.shorteners['v.gd']
-  &&
-  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
-">
-  jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
-</button>
-<br><br>
