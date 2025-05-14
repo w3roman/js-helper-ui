@@ -16,6 +16,19 @@
 
 <button onclick="jsHelperUi.disableDefaultShortcutsOfCodeReview()">disableDefaultShortcutsOfCodeReview()</button>
 <button onclick="jsHelperUi.enableDefaultShortcutsOfCodeReview()">enableDefaultShortcutsOfCodeReview()</button>
+<br><br>
+
+<button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'])">
+  jsHelperUi.downloadDataAsFile(['Foo', 'Bar'])
+</button>
+<br><br>
+<button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.txt')">
+  jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.txt')
+</button>
+<br><br>
+<button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.html', 'text/html')">
+  jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.html', 'text/html')
+</button>
 
 <div id="js-helper-html-headers-map-box">
   <h1>jsHelperUi.htmlHeadersMap</h1>

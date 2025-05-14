@@ -52,6 +52,25 @@ jsHelperUi._defaultShortcutsOfCodeReview = keyboardEvent =>
     && keyboardEvent.preventDefault()
 
 /**
+ * @param {Array} data An array of data; for example `['foo', 'bar']`
+ * @param {String} contentType='text/plain' Content type for optimal results
+ * @param {String} filename='download.txt' File name
+ * @see https://flexiple.com/javascript/download-flle-using-javascript
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Blob
+ */
+jsHelperUi.downloadDataAsFile = (data, filename = 'download.txt', contentType = 'text/plain') => {
+    const blob = new Blob(data, {type: contentType})
+    const fileURL = URL.createObjectURL(blob)
+    const downloadLink = document.createElement('a')
+    downloadLink.href = fileURL
+    downloadLink.download = filename
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    downloadLink.remove()
+    URL.revokeObjectURL(fileURL)
+}
+
+/**
  * @param {Object} options
  * @param {HTMLElement} options.from
  * @param {HTMLElement} options.to
