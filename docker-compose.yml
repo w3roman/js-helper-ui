@@ -2,15 +2,8 @@ services:
   node:
     build: ./.docker/node
     image: js-helper-ui-node
-    container_name: js-helper-ui-node
-    ports:
-      - '5173:5173'
     volumes:
       - ./:/app
     working_dir: /app
     user: 1000:1000
-    tty: true
-    restart: always
-networks:
-  default:
-    name: js-helper-ui-default
+    pull_policy: never
