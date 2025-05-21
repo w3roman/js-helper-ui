@@ -31,14 +31,14 @@ jsHelperUi.enableContextMenu = _ => window.removeEventListener('contextmenu', js
 jsHelperUi._contextMenuListener = mouseEvent => mouseEvent.preventDefault()
 
 jsHelperUi.disableDefaultShortcutsOfCodeReview = _ =>
-    window.addEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
+    window.addEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReviewListener)
 jsHelperUi.enableDefaultShortcutsOfCodeReview = _ =>
-    window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReview)
+    window.removeEventListener('keydown', jsHelperUi._defaultShortcutsOfCodeReviewListener)
 /**
  * Tested only in Google Chrome
  * @see https://toptal.com/developers/keycode
  */
-jsHelperUi._defaultShortcutsOfCodeReview = keyboardEvent =>
+jsHelperUi._defaultShortcutsOfCodeReviewListener = keyboardEvent =>
     (
         keyboardEvent.code === 'F12'
         ||
@@ -121,48 +121,6 @@ jsHelperUi.iLoveValidator = (textContent = '</>') => {
 }
 
 /**
- * Example of usage
- * ```
- * <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
- * <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
- * <style>
- *   .line-numbers {
- *     overflow: auto;
- *     position: relative;
- *     padding-left: 35px;
- *   }
- *
- *   .line-numbers::before {
- *     content: attr(data-line-numbers);
- *     position: absolute;
- *     left: 3px;
- *   }
- * </style>
- * <script>
- *   window.addEventListener('DOMContentLoaded', _ => {
- *     document.querySelectorAll(".line-numbers").forEach(element => jsHelperUi.setDataLineNumbersAttribute(element))
- *   })
- * </script>
- * ```
- * @param {HTMLElement} element HTMLElement with `contenteditable="plaintext-only"` attribute
- */
-jsHelperUi.setDataLineNumbersAttribute = element => {
-    const splitInnerText = element.innerText.split('\n')
-    let numberOfLines = splitInnerText.length
-    if (splitInnerText[splitInnerText.length - 1] !== '') {
-        numberOfLines++
-    }
-    let lineNumbers = ''
-    for (let i = 1; i < numberOfLines; i++) {
-        lineNumbers += i + '\n'
-    }
-    if (lineNumbers === '') {
-        lineNumbers = 1
-    }
-    element.setAttribute('data-line-numbers', lineNumbers)
-}
-
-/**
  * Executes a `callback` for the given key code sequence
  * @param {String} keyCodeSequence Example: `KeyO,KeyK` (ok). Delimiter: `,` (without spaces).
  * @param {Function} callback The function that is executed when a key code sequence occurs
@@ -192,6 +150,50 @@ jsHelperUi.onKeyCodeSequence = (keyCodeSequence, callback, once = false) => {
         }
     }
     window.addEventListener('keyup', listener)
+}
+
+/**
+ * Example of usage
+ * ```
+ * <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+ * <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+ *
+ * <style>
+ *   .line-numbers {
+ *     overflow: auto;
+ *     position: relative;
+ *     padding-left: 35px;
+ *   }
+ *
+ *   .line-numbers::before {
+ *     content: attr(data-line-numbers);
+ *     position: absolute;
+ *     left: 3px;
+ *   }
+ * </style>
+ *
+ * <script>
+ *   window.addEventListener('DOMContentLoaded', _ => {
+ *     document.querySelectorAll(".line-numbers").forEach(element => jsHelperUi.setDataLineNumbersAttribute(element))
+ *   })
+ * </script>
+ * ```
+ * @param {HTMLElement} element HTMLElement with `contenteditable="plaintext-only"` attribute
+ */
+jsHelperUi.setDataLineNumbersAttribute = element => {
+    const splitInnerText = element.innerText.split('\n')
+    let numberOfLines = splitInnerText.length
+    if (splitInnerText[splitInnerText.length - 1] !== '') {
+        numberOfLines++
+    }
+    let lineNumbers = ''
+    for (let i = 1; i < numberOfLines; i++) {
+        lineNumbers += i + '\n'
+    }
+    if (lineNumbers === '') {
+        lineNumbers = 1
+    }
+    element.setAttribute('data-line-numbers', lineNumbers)
 }
 
 jsHelperUi.const.corsProxyUrl = 'https://corsproxy.io/?url='

@@ -6,18 +6,22 @@
 </script>
 
 <h1>jsHelperUi</h1>
-<hr><br>
+
+<hr>
 
 <button onclick="jsHelperUi.copyTextToClipboard('Hello, World!')">copyTextToClipboard('Hello, World!')</button>
-<br><br><hr><br>
+
+<hr>
 
 <button onclick="jsHelperUi.disableContextMenu()">disableContextMenu()</button>
 <button onclick="jsHelperUi.enableContextMenu()">enableContextMenu()</button>
-<br><br><hr><br>
+
+<hr>
 
 <button onclick="jsHelperUi.disableDefaultShortcutsOfCodeReview()">disableDefaultShortcutsOfCodeReview()</button>
 <button onclick="jsHelperUi.enableDefaultShortcutsOfCodeReview()">enableDefaultShortcutsOfCodeReview()</button>
-<br><br><hr><br>
+
+<hr>
 
 <button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'])">
   jsHelperUi.downloadDataAsFile(['Foo', 'Bar'])
@@ -30,7 +34,9 @@
 <button onclick="jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.html', 'text/html')">
   jsHelperUi.downloadDataAsFile(['Foo', 'Bar'], 'foo-bat.html', 'text/html')
 </button>
-<br><br><hr>
+<hr>
+
+<h2>htmlHeadersMap({from: &lt;element&gt;, to: &lt;element&gt;})</h2>
 
 <div id="js-helper-html-headers-map-box">
   <h1>Header 1</h1>
@@ -42,7 +48,27 @@
 </div>
 <div id="js-helper-html-headers-map-result"></div>
 
-<br><hr>
+<script>
+  window.addEventListener('DOMContentLoaded', _ =>
+    jsHelperUi.htmlHeadersMap({
+      from: document.getElementById('js-helper-html-headers-map-box'),
+      to: document.getElementById('js-helper-html-headers-map-result')
+    })
+  )
+</script>
+
+<hr>
+
+<script>
+  window.addEventListener('DOMContentLoaded', _ => jsHelperUi.iLoveValidator())
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', _ => {
+    jsHelperUi.onKeyCodeSequence('KeyH,KeyE,KeyL,KeyL,KeyO', alert.bind(null, 'hello'))
+    jsHelperUi.onKeyCodeSequence('KeyO,KeyK', alert.bind(null, 'ok'), true)
+  })
+</script>
 
 <h2>setDataLineNumbersAttribute()</h2>
 <style>
@@ -57,6 +83,7 @@
 
 <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
 <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+
 <style>
   .line-numbers {
     overflow: auto;
@@ -70,13 +97,14 @@
     left: 3px;
   }
 </style>
+
 <script>
   window.addEventListener('DOMContentLoaded', _ => {
     document.querySelectorAll(".line-numbers").forEach(element => jsHelperUi.setDataLineNumbersAttribute(element))
   })
 </script>
 
-<hr><br>
+<hr>
 
 <button onclick="jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))">
   jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))
@@ -111,16 +139,4 @@
 ">
   jsHelperUi.shortUrl('https://grinvik.com', 'https://v.gd/create.php?format=simple&url=', true).then(shortLink => alert(shortLink))
 </button>
-<br><br><hr>
-
-<script>
-  window.addEventListener('DOMContentLoaded', _ => {
-    jsHelperUi.htmlHeadersMap({
-      from: document.getElementById('js-helper-html-headers-map-box'),
-      to: document.getElementById('js-helper-html-headers-map-result')
-    })
-    jsHelperUi.iLoveValidator()
-    jsHelperUi.onKeyCodeSequence('KeyH,KeyE,KeyL,KeyL,KeyO', alert.bind(null, 'hello'))
-    jsHelperUi.onKeyCodeSequence('KeyO,KeyK', alert.bind(null, 'ok'), true)
-  })
-</script>
+<hr>
