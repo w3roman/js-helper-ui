@@ -120,6 +120,22 @@ jsHelperUi.iLoveValidator = (textContent = '</>') => {
     document.body.appendChild(link)
 }
 
+jsHelperUi.setDataLineNumbersAttribute = element => {
+    const splitInnerText = element.innerText.split('\n')
+    let numberOfLines = splitInnerText.length
+    if (splitInnerText[splitInnerText.length - 1] !== '') {
+        numberOfLines++
+    }
+    let lineNumbers = ''
+    for (let i = 1; i < numberOfLines; i++) {
+        lineNumbers += i + '\n'
+    }
+    if (lineNumbers === '') {
+        lineNumbers = 1
+    }
+    element.setAttribute('data-line-numbers', lineNumbers)
+}
+
 /**
  * Executes a `callback` for the given key code sequence
  * @param {String} keyCodeSequence Example: `KeyO,KeyK` (ok). Delimiter: `,` (without spaces).

@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 
+<style>
+  .setDataLineNumbersAttribute {
+    border: 1px solid;
+    height: 100px;
+    width: 400px;
+    outline: 0;
+    overflow: auto;
+    padding: 0;
+  }
+
+  .setDataLineNumbersAttribute {
+    overflow: auto;
+    position: relative;
+    padding-left: 35px;
+  }
+
+  .setDataLineNumbersAttribute::before {
+    content: attr(data-line-numbers);
+    position: absolute;
+    left: 3px;
+  }
+</style>
+
 <script type="module">
   import jsHelperUi from './src/js-helper-ui'
   window.jsHelperUi = jsHelperUi
@@ -41,6 +64,17 @@
   <h6>Header 6</h6>
 </div>
 <div id="js-helper-html-headers-map-result"></div>
+
+<br><hr>
+
+<h2>setDataLineNumbersAttribute(textarea)</h2>
+
+<textarea class="setDataLineNumbersAttribute" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></textarea>
+
+<h2>setDataLineNumbersAttribute(div[contenteditable])</h2>
+
+<div contenteditable="plaintext-only" class="setDataLineNumbersAttribute" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+
 <br><hr><br>
 
 <button onclick="jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))">
@@ -85,6 +119,8 @@
       to: document.getElementById('js-helper-html-headers-map-result')
     })
     jsHelperUi.iLoveValidator()
+    jsHelperUi.setDataLineNumbersAttribute(document.querySelector('textarea.setDataLineNumbersAttribute'))
+    jsHelperUi.setDataLineNumbersAttribute(document.querySelector('div.setDataLineNumbersAttribute:last-of-type'))
     jsHelperUi.onKeyCodeSequence('KeyH,KeyE,KeyL,KeyL,KeyO', alert.bind(null, 'hello'))
     jsHelperUi.onKeyCodeSequence('KeyO,KeyK', alert.bind(null, 'ok'), true)
   })
