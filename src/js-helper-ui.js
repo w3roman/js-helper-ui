@@ -120,6 +120,32 @@ jsHelperUi.iLoveValidator = (textContent = '</>') => {
     document.body.appendChild(link)
 }
 
+/**
+ * Example of usage
+ * ```
+ * <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+ * <div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+ * <style>
+ *   .line-numbers {
+ *     overflow: auto;
+ *     position: relative;
+ *     padding-left: 35px;
+ *   }
+ *
+ *   .line-numbers::before {
+ *     content: attr(data-line-numbers);
+ *     position: absolute;
+ *     left: 3px;
+ *   }
+ * </style>
+ * <script>
+ *   window.addEventListener('DOMContentLoaded', _ => {
+ *     document.querySelectorAll(".line-numbers").forEach(element => jsHelperUi.setDataLineNumbersAttribute(element))
+ *   })
+ * </script>
+ * ```
+ * @param {HTMLElement} element HTMLElement with `contenteditable="plaintext-only"` attribute
+ */
 jsHelperUi.setDataLineNumbersAttribute = element => {
     const splitInnerText = element.innerText.split('\n')
     let numberOfLines = splitInnerText.length

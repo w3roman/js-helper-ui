@@ -1,28 +1,5 @@
 <!DOCTYPE html>
 
-<style>
-  .setDataLineNumbersAttribute {
-    border: 1px solid;
-    height: 100px;
-    width: 400px;
-    outline: 0;
-    overflow: auto;
-    padding: 0;
-  }
-
-  .setDataLineNumbersAttribute {
-    overflow: auto;
-    position: relative;
-    padding-left: 35px;
-  }
-
-  .setDataLineNumbersAttribute::before {
-    content: attr(data-line-numbers);
-    position: absolute;
-    left: 3px;
-  }
-</style>
-
 <script type="module">
   import jsHelperUi from './src/js-helper-ui'
   window.jsHelperUi = jsHelperUi
@@ -67,15 +44,39 @@
 
 <br><hr>
 
-<h2>setDataLineNumbersAttribute(textarea)</h2>
+<h2>setDataLineNumbersAttribute()</h2>
+<style>
+  .line-numbers {
+    border: 1px solid;
+    height: 100px;
+    width: 400px;
+    margin-bottom: 30px;
+    outline: 0;
+  }
+</style>
 
-<textarea class="setDataLineNumbersAttribute" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></textarea>
+<div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+<div contenteditable="plaintext-only" class="line-numbers" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
+<style>
+  .line-numbers {
+    overflow: auto;
+    position: relative;
+    padding-left: 35px;
+  }
 
-<h2>setDataLineNumbersAttribute(div[contenteditable])</h2>
+  .line-numbers::before {
+    content: attr(data-line-numbers);
+    position: absolute;
+    left: 3px;
+  }
+</style>
+<script>
+  window.addEventListener('DOMContentLoaded', _ => {
+    document.querySelectorAll(".line-numbers").forEach(element => jsHelperUi.setDataLineNumbersAttribute(element))
+  })
+</script>
 
-<div contenteditable="plaintext-only" class="setDataLineNumbersAttribute" oninput="jsHelperUi.setDataLineNumbersAttribute(this)"></div>
-
-<br><hr><br>
+<hr><br>
 
 <button onclick="jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))">
   jsHelperUi.shortUrl('https://grinvik.com').then(shortLink => alert(shortLink))
@@ -119,8 +120,6 @@
       to: document.getElementById('js-helper-html-headers-map-result')
     })
     jsHelperUi.iLoveValidator()
-    jsHelperUi.setDataLineNumbersAttribute(document.querySelector('textarea.setDataLineNumbersAttribute'))
-    jsHelperUi.setDataLineNumbersAttribute(document.querySelector('div.setDataLineNumbersAttribute:last-of-type'))
     jsHelperUi.onKeyCodeSequence('KeyH,KeyE,KeyL,KeyL,KeyO', alert.bind(null, 'hello'))
     jsHelperUi.onKeyCodeSequence('KeyO,KeyK', alert.bind(null, 'ok'), true)
   })

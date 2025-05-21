@@ -24,6 +24,7 @@ jsHelperUi.enableDefaultShortcutsOfCodeReview()
 jsHelperUi.downloadDataAsFile(data, filename = 'download.txt', contentType = 'text/plain')
 jsHelperUi.htmlHeadersMap(options)
 jsHelperUi.iLoveValidator(textContent = '</>')
+jsHelperUi.setDataLineNumbersAttribute(element)
 jsHelperUi.onKeyCodeSequence(keyCodeSequence, callback, once = false)
 jsHelperUi.shortUrl(urlForShortening, shortenerUrl = 'clck.ru', corsProxy = false)
 ```
